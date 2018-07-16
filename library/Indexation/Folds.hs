@@ -25,22 +25,22 @@ indexTable =
 
 serializeToFile :: Serialize value => FilePath -> FoldM IO value (Either IOException ())
 serializeToFile filePath =
-  lmap C.encode (writeToFile filePath)
+  lmap C.encode (writeBytesToFile filePath)
 
-writeToFile :: FilePath -> FoldM IO ByteString (Either IOException ())
-writeToFile filePath =
+writeBytesToFile :: FilePath -> FoldM IO ByteString (Either IOException ())
+writeBytesToFile filePath =
   FoldM step init exit
   where
     step :: Either IOException Handle -> ByteString -> IO (Either IOException Handle)
-    step fileHandleIfValid bytes =
-      case fileHandleIfValid of
+    step errorOrFileHandle bytes =
+      case errorOrFileHandle of
         Right fileHandle -> try (D.hPut fileHandle bytes $> fileHandle)
         Left exception -> return (Left exception)
     init :: IO (Either IOException Handle)
     init =
       try (openFile filePath WriteMode)
     exit :: Either IOException Handle -> IO (Either IOException ())
-    exit fileHandleIfValid =
-      case fileHandleIfValid of
+    exit errorOrFileHandle =
+      case errorOrFileHandle of
         Right fileHandle -> try (hClose fileHandle)
         Left exception -> return (Left exception)
