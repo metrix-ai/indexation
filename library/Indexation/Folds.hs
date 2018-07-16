@@ -9,7 +9,7 @@ import qualified Data.Serialize as C
 import qualified Data.ByteString as D
 
 
-indexTable :: (Eq value, Hashable value) => Fold value (IndexTable value)
+indexTable :: (Eq entity, Hashable entity) => Fold entity (IndexTable entity)
 indexTable =
   Fold step init extract
   where
@@ -23,7 +23,7 @@ indexTable =
           in IndexTable newIndex newMap
     extract = id
 
-serializeToFile :: Serialize value => FilePath -> FoldM IO value (Either IOException ())
+serializeToFile :: Serialize entity => FilePath -> FoldM IO entity (Either IOException ())
 serializeToFile filePath =
   lmap C.encode (writeBytesToFile filePath)
 

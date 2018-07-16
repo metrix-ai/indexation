@@ -12,29 +12,29 @@ import Indexation.Types
 import qualified Data.HashMap.Strict as A
 import qualified Indexation.Cereal.Get as B
 import qualified Indexation.Cereal.Put as C
-import qualified Indexation.ValueTable as D
+import qualified Indexation.EntityTable as D
 import qualified Data.Serialize as E
 
 
-instance (E.Serialize value, Eq value, Hashable value) => E.Serialize (IndexTable value) where
-  put = C.putValueTable E.put . D.indexTable
-  get = B.getIndexTableAsValueTable E.get
+instance (E.Serialize entity, Eq entity, Hashable entity) => E.Serialize (IndexTable entity) where
+  put = C.putEntityTable E.put . D.indexTable
+  get = B.getIndexTableAsEntityTable E.get
 
-lookup :: (Eq value, Hashable value) => value -> IndexTable value -> Maybe (Index value)
-lookup value (IndexTable size hashMap) =
-  fmap Index (A.lookup value hashMap)
+lookup :: (Eq entity, Hashable entity) => entity -> IndexTable entity -> Maybe (Index entity)
+lookup entity (IndexTable size hashMap) =
+  fmap Index (A.lookup entity hashMap)
 
-register :: (Eq value, Hashable value) => value -> IndexTable value -> (Index value, IndexTable value)
-register value (IndexTable size hashMap) =
-  A.lookup value hashMap & \ case
+register :: (Eq entity, Hashable entity) => entity -> IndexTable entity -> (Index entity, IndexTable entity)
+register entity (IndexTable size hashMap) =
+  A.lookup entity hashMap & \ case
     Just index -> (Index index, IndexTable size hashMap)
     Nothing -> let
       newSize = succ size
-      newHashMap = A.insert value size hashMap
+      newHashMap = A.insert entity size hashMap
       index = Index size
       newTable = IndexTable newSize newHashMap
       in (index, newTable)
 
-empty :: (Eq value, Hashable value) => IndexTable value
+empty :: (Eq entity, Hashable entity) => IndexTable entity
 empty =
   IndexTable 0 mempty

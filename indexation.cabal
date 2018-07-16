@@ -43,7 +43,7 @@ library
   exposed-modules:
     Indexation.Index
     Indexation.IndexTable
-    Indexation.ValueTable
+    Indexation.EntityTable
     Indexation.Folds
     Indexation.Potoki.Transform
   other-modules:

@@ -4,8 +4,8 @@ where
 import Indexation.Prelude
 
 
-data IndexTable value = IndexTable {-# UNPACK #-} !Int {-# UNPACK #-} !(HashMap value Int)
+data IndexTable entity = IndexTable {-# UNPACK #-} !Int {-# UNPACK #-} !(HashMap entity Int)
 
-newtype ValueTable value = ValueTable (Vector value)
+newtype EntityTable entity = EntityTable (Vector entity)
 
-newtype Index value = Index Int
+newtype Index entity = Index Int

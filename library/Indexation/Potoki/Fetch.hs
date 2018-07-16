@@ -6,14 +6,14 @@ import Potoki.Core.Fetch
 import qualified Indexation.IndexTable as A
 
 
-index :: (Eq value, Hashable value) => IORef (IndexTable value) -> Fetch value -> Fetch (Index value)
-index indexTableRef (Fetch valueMaybeIO) =
+index :: (Eq entity, Hashable entity) => IORef (IndexTable entity) -> Fetch entity -> Fetch (Index entity)
+index indexTableRef (Fetch entityMaybeIO) =
   Fetch $ do
-    valueMaybe <- valueMaybeIO
-    case valueMaybe of
-      Just value -> do
+    entityMaybe <- entityMaybeIO
+    case entityMaybe of
+      Just entity -> do
         indexTable <- readIORef indexTableRef
-        A.register value indexTable & \ (!index, !newIndexTable) -> do
+        A.register entity indexTable & \ (!index, !newIndexTable) -> do
           writeIORef indexTableRef newIndexTable
           return (Just index)
       Nothing -> return Nothing

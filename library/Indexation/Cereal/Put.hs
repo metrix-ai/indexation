@@ -25,18 +25,18 @@ putVector putElement vector =
     putElements = traverse_ putElement vector
 
 {-|
-It's recommended to use 'putIndexTableAsValueTable' instead.
+It's recommended to use 'putIndexTableAsEntityTable' instead.
 The hashmap traversal implementation is inefficient and
-the representation of 'ValueTable' is more compact.
+the representation of 'EntityTable' is more compact.
 -}
-putIndexTableDirectly :: Putter value -> Putter (IndexTable value)
-putIndexTableDirectly putValue (IndexTable size hashMap) =
+putIndexTableDirectly :: Putter entity -> Putter (IndexTable entity)
+putIndexTableDirectly putEntity (IndexTable size hashMap) =
   putSize *> putAssociations
   where
     putSize = putInt64le (fromIntegral size)
     putAssociations = A.traverse_ putAssociation hashMap
-    putAssociation key value = putValue key *> putInt64le (fromIntegral value)
+    putAssociation key entity = putEntity key *> putInt64le (fromIntegral entity)
 
-putValueTable :: Putter value -> Putter (ValueTable value)
-putValueTable putValue (ValueTable vector) =
-  putVector putValue vector
+putEntityTable :: Putter entity -> Putter (EntityTable entity)
+putEntityTable putEntity (EntityTable vector) =
+  putVector putEntity vector

@@ -1,6 +1,6 @@
-module Indexation.ValueTable
+module Indexation.EntityTable
 (
-  ValueTable,
+  EntityTable,
   indexTable,
   lookup,
 )
@@ -15,17 +15,17 @@ import qualified Indexation.Cereal.Get as D
 import qualified Data.Serialize as E
 
 
-instance E.Serialize value => E.Serialize (ValueTable value) where
-  put = C.putValueTable E.put
-  get = D.getValueTable E.get
+instance E.Serialize entity => E.Serialize (EntityTable entity) where
+  put = C.putEntityTable E.put
+  get = D.getEntityTable E.get
 
-indexTable :: IndexTable value -> ValueTable value
+indexTable :: IndexTable entity -> EntityTable entity
 indexTable (IndexTable size table) =
-  ValueTable vector
+  EntityTable vector
   where
     vector =
       A.indexHashMapWithSize size table
 
-lookup :: Index value -> ValueTable value -> Maybe value
-lookup (Index indexPrim) (ValueTable vector) =
+lookup :: Index entity -> EntityTable entity -> Maybe entity
+lookup (Index indexPrim) (EntityTable vector) =
   vector B.!? indexPrim
