@@ -44,3 +44,6 @@ getVector getElement =
 getEntityTable :: Get entity -> Get (EntityTable entity)
 getEntityTable getEntity =
   EntityTable <$> getVector getEntity
+
+getIndex :: Get (Index entity)
+getIndex = Index . fromIntegral <$> getInt64le

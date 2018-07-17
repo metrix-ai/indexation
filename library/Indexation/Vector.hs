@@ -2,15 +2,18 @@ module Indexation.Vector
 where
 
 import Indexation.Prelude
+import Indexation.Types
 import Data.Vector
 import qualified Data.Vector.Mutable as A
 import qualified Data.HashMap.Strict as B
+import qualified ListT
+import qualified STMContainers.Map as StmMap
 
 
 {-|
 This function is not tested.
 -}
-{-# INLINE populate #-}
+{-# NOINLINE populate #-}
 populate :: Monad effect => Int -> effect (Int, element) -> effect (Vector element)
 populate size effect =
   do
@@ -39,3 +42,14 @@ indexHashMapWithSize size hashMap =
       step () element index = unsafeDupablePerformIO (A.write mv index element)
       !() = B.foldlWithKey' step () hashMap
       in freeze mv
+
+{-# NOINLINE listT #-}
+listT :: Monad m => Int -> ListT m (Int, element) -> m (Vector element)
+listT size listT =
+  let
+    step mv (index, element) = return (unsafeDupablePerformIO (A.write mv index element $> mv))
+    in do
+      !mv <- return (unsafeDupablePerformIO (A.unsafeNew size))
+      ListT.fold step mv listT
+      !iv <- return (unsafeDupablePerformIO (unsafeFreeze mv))
+      return iv
