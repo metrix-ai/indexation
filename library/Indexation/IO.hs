@@ -2,6 +2,7 @@ module Indexation.IO
 (
   indexProduceToFiles,
   readEntitiesAmountFromEntityTableFile,
+  readEntityTableFromFile,
 )
 where
 
@@ -9,6 +10,7 @@ import Indexation.Prelude
 import Indexation.Types
 import Indexation.Instances.Cereal ()
 import qualified Potoki.Core.IO as PotokiIo
+import qualified Potoki.Core.Produce as PotokiProduce
 import qualified Potoki.Core.Consume as PotokiConsume
 import qualified Potoki.Cereal.Consume as PotokiConsume
 import qualified Potoki.Cereal.Produce as PotokiProduce
@@ -63,3 +65,9 @@ readEntitiesAmountFromEntityTableFile filePath =
     Cereal.runGet Cereal.getInt64le bytes & \ case
       Right x -> return (fromIntegral x)
       Left x -> error ("Unexpected binary parsing error: " <> x)
+
+readEntityTableFromFile :: Serialize entity => FilePath -> IO (Either IOException (Either Text (EntityTable entity)))
+readEntityTableFromFile filePath =
+  PotokiIo.produceAndConsume
+    (PotokiProduce.fileBytes filePath)
+    (right' (PotokiConsume.get Cereal.get))

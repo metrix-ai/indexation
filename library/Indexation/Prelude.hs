@@ -108,6 +108,10 @@ import Data.Serialize as Exports (Serialize)
 -------------------------
 import Data.ByteString as Exports (ByteString)
 
+-- text
+-------------------------
+import Data.Text as Exports (Text)
+
 -- profunctors
 -------------------------
 import Data.Profunctor as Exports hiding (WrappedArrow(..))
