@@ -5,7 +5,6 @@ import Indexation.Prelude
 import Indexation.Types
 import Data.Serialize.Get
 import qualified Data.HashMap.Strict as A
-import qualified Indexation.HashMap as A
 import qualified Data.Vector as B
 
 

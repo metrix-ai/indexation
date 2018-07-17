@@ -54,7 +54,6 @@ library
     Indexation.Cereal.Put
     Indexation.Prelude
     Indexation.Vector
-    Indexation.HashMap
     Indexation.Folds
   build-depends:
     base >=4.7 && <5,

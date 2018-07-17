@@ -2,12 +2,10 @@ module Indexation.Vector
 where
 
 import Indexation.Prelude
-import Indexation.Types
 import Data.Vector
 import qualified Data.Vector.Mutable as A
 import qualified Data.HashMap.Strict as B
 import qualified ListT
-import qualified STMContainers.Map as StmMap
 
 
 {-|
