@@ -45,6 +45,7 @@ library
     Indexation.Index
     Indexation.IndexTable
     Indexation.IO
+    Indexation.Potoki.Produce
   other-modules:
     Indexation.Cereal.Get
     Indexation.Cereal.Put
