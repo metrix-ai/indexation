@@ -45,7 +45,6 @@ library
     Indexation.IndexTable
     Indexation.EntityTable
     Indexation.IO
-    Indexation.Folds
   other-modules:
     Indexation.Instances.Cereal
     Indexation.Potoki.Fetch
@@ -56,6 +55,7 @@ library
     Indexation.Prelude
     Indexation.Vector
     Indexation.HashMap
+    Indexation.Folds
   build-depends:
     base >=4.7 && <5,
     bytestring >=0.10.8 && <0.11,
