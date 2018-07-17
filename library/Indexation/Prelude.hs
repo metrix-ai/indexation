@@ -122,7 +122,6 @@ import ListT as Exports (ListT(..))
 
 -- potoki-core
 -------------------------
-import Potoki.Core.Produce as Exports (Produce)
-import Potoki.Core.Consume as Exports (Consume)
-import Potoki.Core.Transform as Exports (Transform)
-import Potoki.Core.Fetch as Exports (Fetch)
+import Potoki.Produce as Exports (Produce)
+import Potoki.Consume as Exports (Consume)
+import Potoki.Transform as Exports (Transform)

@@ -2,7 +2,7 @@ module Indexation.Potoki.Transform where
 
 import Indexation.Prelude hiding (runState)
 import Indexation.Types
-import Potoki.Core.Transform
+import Potoki.Transform
 import qualified Focus
 import qualified STMContainers.Map as StmMap
 

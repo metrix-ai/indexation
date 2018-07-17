@@ -10,9 +10,9 @@ where
 import Indexation.Prelude
 import Indexation.Types
 import Indexation.Instances.Cereal ()
-import qualified Potoki.Core.IO as PotokiIo
-import qualified Potoki.Core.Produce as PotokiProduce
-import qualified Potoki.Core.Consume as PotokiConsume
+import qualified Potoki.IO as PotokiIo
+import qualified Potoki.Produce as PotokiProduce
+import qualified Potoki.Consume as PotokiConsume
 import qualified Potoki.Cereal.Consume as PotokiConsume
 import qualified Potoki.Cereal.Produce as PotokiProduce
 import qualified Indexation.Potoki.Transform as PotokiTransform
