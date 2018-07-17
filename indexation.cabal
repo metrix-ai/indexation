@@ -46,10 +46,10 @@ library
     Indexation.EntityTable
     Indexation.IO
     Indexation.Folds
-    Indexation.Potoki.Transform
   other-modules:
     Indexation.Instances.Cereal
     Indexation.Potoki.Fetch
+    Indexation.Potoki.Transform
     Indexation.Types
     Indexation.Cereal.Get
     Indexation.Cereal.Put
