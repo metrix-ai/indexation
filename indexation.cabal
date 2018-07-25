@@ -9,9 +9,9 @@ synopsis:
 description:
   A set of tools for indexing entities
 homepage:
-  https://github.com/nikita-volkov/indexation 
+  https://github.com/metrix-ai/indexation 
 bug-reports:
-  https://github.com/nikita-volkov/indexation/issues 
+  https://github.com/metrix-ai/indexation/issues 
 author:
   Nikita Volkov <nikita.y.volkov@mail.ru>
 maintainer:
@@ -31,7 +31,7 @@ source-repository head
   type:
     git
   location:
-    git://github.com/nikita-volkov/indexation.git
+    git://github.com/metrix-ai/indexation.git
 
 library
   hs-source-dirs:
