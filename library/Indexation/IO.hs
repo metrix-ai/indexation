@@ -17,7 +17,7 @@ import qualified Potoki.Cereal.Consume as PotokiConsume
 import qualified Potoki.Cereal.Produce as PotokiProduce
 import qualified Indexation.Potoki.Transform as PotokiTransform
 import qualified Indexation.Vector as Vector
-import qualified STMContainers.Map as StmMap
+import qualified StmContainers.Map as StmMap
 import qualified Data.Serialize as Cereal
 import qualified Data.ByteString as ByteString
 
@@ -32,7 +32,7 @@ createIndexerVector :: Indexer entity -> IO (Vector entity)
 createIndexerVector (Indexer sizeVar map) =
   atomically $ do
     size <- readTVar sizeVar
-    Vector.listT size (fmap swap (StmMap.stream map))
+    Vector.unfoldM size (fmap swap (StmMap.unfoldM map))
 
 createIndexerEntityTable :: Indexer entity -> IO (EntityTable entity)
 createIndexerEntityTable = fmap EntityTable . createIndexerVector

@@ -2,7 +2,7 @@ module Indexation.Types
 where
 
 import Indexation.Prelude
-import qualified STMContainers.Map as A
+import qualified StmContainers.Map as A
 
 
 data Indexer entity = Indexer (TVar Int) (A.Map entity Int)

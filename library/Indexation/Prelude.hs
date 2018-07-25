@@ -83,6 +83,7 @@ import Control.Monad.Trans.Writer.Strict as Exports (Writer, runWriter, execWrit
 -- deferred-folds
 -------------------------
 import DeferredFolds.Unfold as Exports (Unfold(..))
+import DeferredFolds.UnfoldM as Exports (UnfoldM(..))
 
 -- foldl
 -------------------------
@@ -115,10 +116,6 @@ import Data.Text as Exports (Text)
 -- profunctors
 -------------------------
 import Data.Profunctor as Exports hiding (WrappedArrow(..))
-
--- list-t
--------------------------
-import ListT as Exports (ListT(..))
 
 -- potoki-core
 -------------------------

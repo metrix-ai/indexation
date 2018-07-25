@@ -4,16 +4,16 @@ import Indexation.Prelude hiding (runState)
 import Indexation.Types
 import Potoki.Transform
 import qualified Focus
-import qualified STMContainers.Map as StmMap
+import qualified StmContainers.Map as StmMap
 
 
 indexConcurrently :: (Eq entity, Hashable entity) => Indexer entity -> Transform entity (Index entity)
 indexConcurrently (Indexer sizeVar map) =
-  mapInIO $ \ entity -> atomically $ StmMap.focus strategy entity map
+  mapInIO $ \ entity -> atomically $ StmMap.focus focus entity map
   where
-    strategy = \ case
-      Just indexInt -> return (Index indexInt, Focus.Keep)
-      Nothing -> do
+    focus = Focus.Focus conceal reveal where
+      conceal = do
         size <- readTVar sizeVar
         writeTVar sizeVar $! succ size
-        return (Index size, Focus.Replace size)
+        return (Index size, Focus.Set size)
+      reveal indexInt = return (Index indexInt, Focus.Leave)
