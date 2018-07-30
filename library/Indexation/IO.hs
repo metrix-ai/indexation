@@ -1,5 +1,7 @@
 module Indexation.IO
 (
+  createIndexer,
+  serializeIndexerToFile,
   indexProduceToFiles,
   readEntitiesAmountFromEntityTableFile,
   readEntityTableFromFile,

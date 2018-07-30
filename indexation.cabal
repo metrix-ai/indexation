@@ -46,13 +46,13 @@ library
     Indexation.IndexTable
     Indexation.IO
     Indexation.Potoki.Produce
+    Indexation.Potoki.Transform
   other-modules:
     Indexation.Cereal.Get
     Indexation.Cereal.Put
     Indexation.Constructors.EntityTable
     Indexation.Folds
     Indexation.Instances.Cereal
-    Indexation.Potoki.Transform
     Indexation.Prelude
     Indexation.Types
     Indexation.Vector
