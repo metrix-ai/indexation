@@ -1,5 +1,8 @@
 module Indexation.IO
 (
+  Indexer,
+  IndexTable,
+  EntityTable,
   createIndexer,
   serializeIndexerToFile,
   indexProduceToFiles,
@@ -42,7 +45,7 @@ createIndexerEntityTable = fmap EntityTable . createIndexerVector
 serializeProduceEntityIndicesToFile :: (Eq entity, Hashable entity) => FilePath -> Indexer entity -> Produce entity -> IO (Either IOException ())
 serializeProduceEntityIndicesToFile path indexer entityProduce =
   PotokiIo.produceAndConsume entityProduce $
-  PotokiConsume.transform (PotokiTransform.indexConcurrently indexer) $
+  PotokiConsume.transform (PotokiTransform.index indexer) $
   PotokiConsume.encodeToFile path
 
 serializeIndexerToFile :: Serialize entity => FilePath -> Indexer entity -> IO (Either IOException ())

@@ -1,4 +1,11 @@
-module Indexation.Potoki.Transform where
+module Indexation.Potoki.Transform
+(
+  Transform,
+  Index(..),
+  Indexer,
+  index,
+)
+where
 
 import Indexation.Prelude hiding (runState)
 import Indexation.Types
@@ -7,8 +14,8 @@ import qualified Focus
 import qualified StmContainers.Map as StmMap
 
 
-indexConcurrently :: (Eq entity, Hashable entity) => Indexer entity -> Transform entity (Index entity)
-indexConcurrently (Indexer sizeVar map) =
+index :: (Eq entity, Hashable entity) => Indexer entity -> Transform entity (Index entity)
+index (Indexer sizeVar map) =
   mapInIO $ \ entity -> atomically $ StmMap.focus focus entity map
   where
     focus = Focus.Focus conceal reveal where
