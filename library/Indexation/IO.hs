@@ -1,14 +1,12 @@
 module Indexation.IO
 (
   Indexer,
-  IndexTable,
   EntityTable,
   createIndexer,
-  serializeIndexerToFile,
-  indexProduceToFiles,
+  freezeIndexerAsEntityTable,
+  serializeEntityTableToFile,
   readEntitiesAmountFromEntityTableFile,
   readEntityTableFromFile,
-  readIndexTableFromFile,
 )
 where
 
@@ -33,36 +31,20 @@ createIndexer = do
   map <- StmMap.newIO
   return (Indexer sizeVar map)
 
-createIndexerVector :: Indexer entity -> IO (Vector entity)
-createIndexerVector (Indexer sizeVar map) =
+freezeIndexerAsVector :: Indexer entity -> IO (Vector entity)
+freezeIndexerAsVector (Indexer sizeVar map) =
   atomically $ do
     size <- readTVar sizeVar
     Vector.unfoldM size (fmap swap (StmMap.unfoldM map))
 
-createIndexerEntityTable :: Indexer entity -> IO (EntityTable entity)
-createIndexerEntityTable = fmap EntityTable . createIndexerVector
+freezeIndexerAsEntityTable :: Indexer entity -> IO (EntityTable entity)
+freezeIndexerAsEntityTable = fmap EntityTable . freezeIndexerAsVector
 
-serializeProduceEntityIndicesToFile :: (Eq entity, Hashable entity) => FilePath -> Indexer entity -> Produce entity -> IO (Either IOException ())
-serializeProduceEntityIndicesToFile path indexer entityProduce =
-  PotokiIo.produceAndConsume entityProduce $
-  PotokiConsume.transform (PotokiTransform.index indexer) $
-  PotokiConsume.encodeToFile path
-
-serializeIndexerToFile :: Serialize entity => FilePath -> Indexer entity -> IO (Either IOException ())
-serializeIndexerToFile path indexer = do
-  entityTable <- createIndexerEntityTable indexer
-  let
-    produce = PotokiProduce.put (Cereal.put entityTable)
-    consume = PotokiConsume.writeBytesToFile path
-    in PotokiIo.produceAndConsume produce consume
-
-indexProduceToFiles :: (Eq entity, Hashable entity, Serialize entity) => FilePath {-^ Entity table -} -> FilePath {-^ Index stream -} -> Produce entity -> IO (Either IOException ())
-indexProduceToFiles entityTablePath indexStreamPath entityProduce =
-  do
-    indexer <- createIndexer
-    runExceptT $ do
-      ExceptT (serializeProduceEntityIndicesToFile indexStreamPath indexer entityProduce)
-      ExceptT (serializeIndexerToFile entityTablePath indexer)
+serializeEntityTableToFile :: Serialize entity => EntityTable entity -> FilePath -> IO (Either IOException ())
+serializeEntityTableToFile entityTable path = let
+  produce = PotokiProduce.put (Cereal.put entityTable)
+  consume = PotokiConsume.writeBytesToFile path
+  in PotokiIo.produceAndConsume produce consume
 
 readEntitiesAmountFromEntityTableFile :: FilePath -> IO (Either IOException Int)
 readEntitiesAmountFromEntityTableFile filePath =
@@ -74,12 +56,6 @@ readEntitiesAmountFromEntityTableFile filePath =
 
 readEntityTableFromFile :: Serialize entity => FilePath -> IO (Either IOException (Either Text (EntityTable entity)))
 readEntityTableFromFile filePath =
-  PotokiIo.produceAndConsume
-    (PotokiProduce.fileBytes filePath)
-    (right' (PotokiConsume.get Cereal.get))
-
-readIndexTableFromFile :: (Serialize entity, Eq entity, Hashable entity) => FilePath -> IO (Either IOException (Either Text (IndexTable entity)))
-readIndexTableFromFile filePath =
   PotokiIo.produceAndConsume
     (PotokiProduce.fileBytes filePath)
     (right' (PotokiConsume.get Cereal.get))

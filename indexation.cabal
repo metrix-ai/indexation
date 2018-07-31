@@ -41,11 +41,7 @@ library
   default-language:
     Haskell2010
   exposed-modules:
-    Indexation.EntityTable
-    Indexation.Index
-    Indexation.IndexTable
     Indexation.IO
-    Indexation.Potoki.Produce
     Indexation.Potoki.Transform
   other-modules:
     Indexation.Cereal.Get
