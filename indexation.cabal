@@ -49,6 +49,7 @@ library
     Indexation.Cereal.Put
     Indexation.Constructors.EntityTable
     Indexation.Folds
+    Indexation.Instances
     Indexation.Instances.Cereal
     Indexation.Prelude
     Indexation.Types

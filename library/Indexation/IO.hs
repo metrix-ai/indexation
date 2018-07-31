@@ -12,7 +12,7 @@ where
 
 import Indexation.Prelude
 import Indexation.Types
-import Indexation.Data
+import Indexation.Instances ()
 import qualified Potoki.IO as PotokiIo
 import qualified Potoki.Produce as PotokiProduce
 import qualified Potoki.Consume as PotokiConsume

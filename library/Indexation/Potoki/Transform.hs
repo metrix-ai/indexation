@@ -11,6 +11,7 @@ where
 
 import Indexation.Prelude hiding (runState, index, lookup)
 import Indexation.Types
+import Indexation.Instances ()
 import Potoki.Transform
 import qualified Focus
 import qualified StmContainers.Map as StmMap

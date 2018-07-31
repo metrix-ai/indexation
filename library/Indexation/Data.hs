@@ -7,4 +7,4 @@ module Indexation.Data
 where
 
 import Indexation.Types
-import Indexation.Instances.Cereal ()
+import Indexation.Instances ()
