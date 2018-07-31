@@ -85,10 +85,6 @@ import Control.Monad.Trans.Writer.Strict as Exports (Writer, runWriter, execWrit
 import DeferredFolds.Unfold as Exports (Unfold(..))
 import DeferredFolds.UnfoldM as Exports (UnfoldM(..))
 
--- foldl
--------------------------
-import Control.Foldl as Exports (Fold(..), FoldM(..))
-
 -- hashable
 -------------------------
 import Data.Hashable as Exports (Hashable(..))

@@ -48,7 +48,6 @@ library
     Indexation.Cereal.Get
     Indexation.Cereal.Put
     Indexation.Constructors.EntityTable
-    Indexation.Folds
     Indexation.Instances
     Indexation.Instances.Cereal
     Indexation.Prelude
@@ -60,7 +59,6 @@ library
     cereal >=0.5.5 && <0.6,
     deferred-folds >=0.6 && <0.7,
     focus >=1.0.1 && <1.1,
-    foldl >=1 && <2,
     hashable >=1 && <2,
     potoki >=2 && <2.1,
     potoki-cereal >=0.3 && <0.4,
