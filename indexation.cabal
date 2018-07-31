@@ -41,6 +41,7 @@ library
   default-language:
     Haskell2010
   exposed-modules:
+    Indexation.Data
     Indexation.IO
     Indexation.Potoki.Transform
   other-modules:
