@@ -3,6 +3,7 @@ module Indexation.IO
   Indexer,
   EntityTable,
   createIndexer,
+  getIndexerSize,
   freezeIndexerAsEntityTable,
   serializeEntityTableToFile,
   readEntitiesAmountFromEntityTableFile,
@@ -30,6 +31,9 @@ createIndexer = do
   sizeVar <- newTVarIO 0
   map <- StmMap.newIO
   return (Indexer sizeVar map)
+
+getIndexerSize :: Indexer entity -> IO Int
+getIndexerSize (Indexer sizeVar _) = atomically (readTVar sizeVar)
 
 freezeIndexerAsVector :: Indexer entity -> IO (Vector entity)
 freezeIndexerAsVector (Indexer sizeVar map) =
