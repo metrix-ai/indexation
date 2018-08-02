@@ -6,6 +6,7 @@ module Indexation.IO
   getIndexerSize,
   freezeIndexerAsEntityTable,
   serializeEntityTableToFile,
+  serializeIndexerToFile,
   readEntitiesAmountFromEntityTableFile,
   readEntityTableFromFile,
 )
@@ -49,6 +50,13 @@ serializeEntityTableToFile entityTable path = let
   produce = PotokiProduce.put (Cereal.put entityTable)
   consume = PotokiConsume.writeBytesToFile path
   in PotokiIo.produceAndConsume produce consume
+
+serializeIndexerToFile :: Serialize a => (Text -> IO ()) -> FilePath -> Indexer a -> IO (Either IOException ())
+serializeIndexerToFile log file indexer = do
+  log "Freezing"
+  entityTable <- freezeIndexerAsEntityTable indexer
+  log "Writing to file"
+  serializeEntityTableToFile entityTable file
 
 readEntitiesAmountFromEntityTableFile :: FilePath -> IO (Either IOException Int)
 readEntitiesAmountFromEntityTableFile filePath =
