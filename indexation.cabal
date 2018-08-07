@@ -6,7 +6,7 @@ description: A set of tools for indexing entities
 homepage: https://github.com/metrix-ai/indexation
 bug-reports: https://github.com/metrix-ai/indexation/issues
 author: Nikita Volkov <nikita.y.volkov@mail.ru>
-maintainer: Metrix Tech Team <tech@metrix.ai>
+maintainer: Metrix.AI Tech Team <tech@metrix.ai>
 copyright: (c) 2018, Metrix.AI
 license: MIT
 license-file: LICENSE
