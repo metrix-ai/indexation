@@ -6,7 +6,7 @@ import Indexation.Types
 import Indexation.Instances.Cereal ()
 
 
-deriving instance Show (Index a)
+instance Show (Index a) where show (Index int) = show int
 deriving instance Eq (Index a)
 deriving instance Ord (Index a)
 deriving instance Hashable (Index a)
