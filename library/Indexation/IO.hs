@@ -61,7 +61,7 @@ serializeIndexerToFile log file indexer = do
 readEntitiesAmountFromEntityTableFile :: FilePath -> IO (Either IOException Int)
 readEntitiesAmountFromEntityTableFile filePath =
   try $ do
-    bytes <- withFile filePath ReadMode (flip ByteString.hGet 4)
+    bytes <- withFile filePath ReadMode (flip ByteString.hGet 8)
     Cereal.runGet Cereal.getInt64le bytes & \ case
       Right x -> return (fromIntegral x)
       Left x -> error ("Unexpected binary parsing error: " <> x)
