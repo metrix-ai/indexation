@@ -9,6 +9,7 @@ module Indexation.IO
   serializeIndexerToFile,
   readEntitiesAmountFromEntityTableFile,
   readEntityTableFromFile,
+  readIndexTableFromFile,
 )
 where
 
@@ -68,6 +69,12 @@ readEntitiesAmountFromEntityTableFile filePath =
 
 readEntityTableFromFile :: Serialize entity => FilePath -> IO (Either IOException (Either Text (EntityTable entity)))
 readEntityTableFromFile filePath =
+  PotokiIo.produceAndConsume
+    (PotokiProduce.fileBytes filePath)
+    (right' (PotokiConsume.get Cereal.get))
+
+readIndexTableFromFile :: (Serialize entity, Eq entity, Hashable entity) => FilePath -> IO (Either IOException (Either Text (IndexTable entity)))
+readIndexTableFromFile filePath =
   PotokiIo.produceAndConsume
     (PotokiProduce.fileBytes filePath)
     (right' (PotokiConsume.get Cereal.get))
