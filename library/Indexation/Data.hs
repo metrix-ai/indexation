@@ -2,6 +2,7 @@ module Indexation.Data
 (
   Index(..),
   EntityTable,
+  IndexTable,
   Indexer,
   lookupEntity,
   lookupIndex,
