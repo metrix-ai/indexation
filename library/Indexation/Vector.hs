@@ -6,6 +6,7 @@ import Data.Vector
 import qualified Data.Vector.Mutable as A
 import qualified Data.HashMap.Strict as B
 import qualified DeferredFolds.UnfoldM as UnfoldM
+import qualified ListT
 
 
 {-|
@@ -51,3 +52,9 @@ unfoldM size unfoldM =
       UnfoldM.foldlM' step mv unfoldM
       !iv <- return (unsafeDupablePerformIO (unsafeFreeze mv))
       return iv
+
+listTInIO :: Int -> ListT IO (Int, element) -> IO (Vector element)
+listTInIO size listT = do
+  mv <- A.unsafeNew size
+  flip ListT.traverse_ listT $ \ (index, element) -> A.write mv index element
+  unsafeFreeze mv

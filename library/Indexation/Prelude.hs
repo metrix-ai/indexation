@@ -118,3 +118,11 @@ import Data.Profunctor as Exports hiding (WrappedArrow(..))
 import Potoki.Produce as Exports (Produce)
 import Potoki.Consume as Exports (Consume)
 import Potoki.Transform as Exports (Transform)
+
+-- mmorph
+-------------------------
+import Control.Monad.Morph as Exports hiding (MonadTrans(..))
+
+-- list-t
+-------------------------
+import ListT as Exports (ListT(..))

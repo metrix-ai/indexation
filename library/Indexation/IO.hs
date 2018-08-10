@@ -39,9 +39,9 @@ getIndexerSize (Indexer sizeVar _) = atomically (readTVar sizeVar)
 
 freezeIndexerAsVector :: Indexer entity -> IO (Vector entity)
 freezeIndexerAsVector (Indexer sizeVar map) =
-  atomically $ do
-    size <- readTVar sizeVar
-    Vector.unfoldM size (fmap swap (StmMap.unfoldM map))
+  do
+    size <- atomically (readTVar sizeVar)
+    Vector.listTInIO size (hoist atomically (fmap swap (StmMap.listT map)))
 
 freezeIndexerAsEntityTable :: Indexer entity -> IO (EntityTable entity)
 freezeIndexerAsEntityTable = fmap EntityTable . freezeIndexerAsVector
