@@ -122,7 +122,3 @@ import Potoki.Transform as Exports (Transform)
 -- mmorph
 -------------------------
 import Control.Monad.Morph as Exports hiding (MonadTrans(..))
-
--- list-t
--------------------------
-import ListT as Exports (ListT(..))

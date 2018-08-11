@@ -23,25 +23,25 @@ import qualified Potoki.Cereal.Consume as PotokiConsume
 import qualified Potoki.Cereal.Produce as PotokiProduce
 import qualified Indexation.Potoki.Transform as PotokiTransform
 import qualified Indexation.Vector as Vector
-import qualified StmContainers.Map as StmMap
+import qualified Data.HashTable.IO as HashtablesIO
 import qualified Data.Serialize as Cereal
 import qualified Data.ByteString as ByteString
 
 
 createIndexer :: IO (Indexer entity)
 createIndexer = do
-  sizeVar <- newTVarIO 0
-  map <- StmMap.newIO
-  return (Indexer sizeVar map)
+  sizeRef <- newIORef 0
+  map <- HashtablesIO.new
+  return (Indexer sizeRef map)
 
 getIndexerSize :: Indexer entity -> IO Int
-getIndexerSize (Indexer sizeVar _) = atomically (readTVar sizeVar)
+getIndexerSize (Indexer sizeRef _) = readIORef sizeRef
 
 freezeIndexerAsVector :: Indexer entity -> IO (Vector entity)
-freezeIndexerAsVector (Indexer sizeVar map) =
+freezeIndexerAsVector (Indexer sizeRef map) =
   do
-    size <- atomically (readTVar sizeVar)
-    Vector.listTInIO size (hoist atomically (fmap swap (StmMap.listT map)))
+    size <- readIORef sizeRef
+    Vector.hashTable size map
 
 freezeIndexerAsEntityTable :: Indexer entity -> IO (EntityTable entity)
 freezeIndexerAsEntityTable = fmap EntityTable . freezeIndexerAsVector

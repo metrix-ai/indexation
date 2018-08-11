@@ -2,10 +2,10 @@ module Indexation.Types
 where
 
 import Indexation.Prelude
-import qualified StmContainers.Map as A
+import qualified Data.HashTable.IO as HashtablesIO
 
 
-data Indexer entity = Indexer {-# UNPACK #-} !(TVar Int) {-# UNPACK #-} !(A.Map entity Int)
+data Indexer entity = Indexer {-# UNPACK #-} !(IORef Int) {-# UNPACK #-} !(HashtablesIO.CuckooHashTable entity Int)
 
 data IndexTable entity = IndexTable {-# UNPACK #-} !Int {-# UNPACK #-} !(HashMap entity Int)
 

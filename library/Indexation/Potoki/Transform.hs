@@ -14,20 +14,20 @@ import Indexation.Types
 import Indexation.Instances ()
 import Potoki.Transform
 import qualified Focus
-import qualified StmContainers.Map as StmMap
+import qualified Data.HashTable.IO as HashtablesIO
 import qualified Data.Vector as Vector
 
 
 index :: (Eq entity, Hashable entity) => Indexer entity -> Transform entity (Index entity)
-index (Indexer sizeVar map) =
-  mapInIO $ \ entity -> atomically $ StmMap.focus focus entity map
+index (Indexer sizeRef map) =
+  mapInIO $ \ entity -> HashtablesIO.mutateIO map entity mutation
   where
-    focus = Focus.Focus conceal reveal where
-      conceal = do
-        size <- readTVar sizeVar
-        writeTVar sizeVar $! succ size
-        return (Index size, Focus.Set size)
-      reveal indexInt = return (Index indexInt, Focus.Leave)
+    mutation = \ case
+      Just indexInt -> return (Just indexInt, Index indexInt) 
+      Nothing -> do
+        size <- readIORef sizeRef
+        writeIORef sizeRef $! succ size
+        return (Just size, Index size)
 
 lookup :: EntityTable entity -> Transform (Index entity) (Maybe entity)
 lookup (EntityTable entityTableVector) =
