@@ -35,12 +35,13 @@ This function is partial. It doesn't check the size or indices.
 {-# INLINE indexHashMapWithSize #-}
 indexHashMapWithSize :: Int -> HashMap element Int -> Vector element
 indexHashMapWithSize size hashMap =
-  unsafePerformIO $ do
-    mv <- MutableVector.unsafeNew size
-    let
-      step () element index = unsafeDupablePerformIO (MutableVector.write mv index element)
-      !() = HashMap.foldlWithKey' step () hashMap
-      in freeze mv
+  runST $ do
+    mv <- MutableVector.new size
+    HashMap.foldrWithKey
+      (\ element index action -> MutableVector.write mv index element >> action)
+      (return ())
+      hashMap
+    freeze mv
 
 {-# NOINLINE unfoldM #-}
 unfoldM :: Monad m => Int -> UnfoldM m (Int, element) -> m (Vector element)
