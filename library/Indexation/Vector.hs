@@ -7,6 +7,7 @@ import qualified Data.Vector.Mutable as MutableVector
 import qualified Data.HashMap.Strict as HashMap
 import qualified DeferredFolds.UnfoldM as UnfoldM
 import qualified Data.HashTable.IO as HashtablesIO
+import qualified Data.HashTable.Class as HashtablesClass
 
 
 {-|
@@ -54,7 +55,7 @@ unfoldM size unfoldM =
       !iv <- return (unsafeDupablePerformIO (unsafeFreeze mv))
       return iv
 
-hashTable :: Int -> HashtablesIO.CuckooHashTable element Int -> IO (Vector element)
+hashTable :: HashtablesClass.HashTable t => Int -> HashtablesIO.IOHashTable t element Int -> IO (Vector element)
 hashTable size hashTable = do
   mv <- MutableVector.unsafeNew size
   flip HashtablesIO.mapM_ hashTable $ \ (element, index) -> MutableVector.write mv index element
