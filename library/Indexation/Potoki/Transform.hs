@@ -20,6 +20,7 @@ import qualified Data.Vector as Vector
 
 index :: (Eq entity, Hashable entity) => Indexer entity -> Transform entity (Index entity)
 index (Indexer sizeVar map) =
+  {-# SCC "index" #-} 
   mapInIO $ \ entity -> atomically $ StmMap.focus focus entity map
   where
     focus = Focus.Focus conceal reveal where
@@ -31,6 +32,7 @@ index (Indexer sizeVar map) =
 
 lookup :: EntityTable entity -> Transform (Index entity) (Maybe entity)
 lookup (EntityTable entityTableVector) =
+  {-# SCC "lookup" #-} 
   arr $ \ (Index indexInt) -> if Vector.length entityTableVector > indexInt
     then Just $! Vector.unsafeIndex entityTableVector indexInt
     else Nothing
