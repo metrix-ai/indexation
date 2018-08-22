@@ -20,6 +20,7 @@ library
   exposed-modules:
     Indexation.Data
     Indexation.IO
+    Indexation.Potoki.Produce
     Indexation.Potoki.Transform
   other-modules:
     Indexation.Cereal.Get
