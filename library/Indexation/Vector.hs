@@ -5,7 +5,7 @@ import Indexation.Prelude
 import Data.Vector
 import qualified Data.Vector.Mutable as MutableVector
 import qualified Data.HashMap.Strict as HashMap
-import qualified DeferredFolds.UnfoldM as UnfoldM
+import qualified DeferredFolds.UnfoldlM as UnfoldlM
 import qualified ListT
 
 
@@ -43,14 +43,14 @@ indexHashMapWithSize size hashMap =
       hashMap
     freeze mv
 
-{-# NOINLINE unfoldM #-}
-unfoldM :: Monad m => Int -> UnfoldM m (Int, element) -> m (Vector element)
-unfoldM size unfoldM =
+{-# NOINLINE unfoldlM #-}
+unfoldlM :: Monad m => Int -> UnfoldlM m (Int, element) -> m (Vector element)
+unfoldlM size unfoldlM =
   let
     step mv (index, element) = return (unsafeDupablePerformIO (MutableVector.write mv index element $> mv))
     in do
       !mv <- return (unsafeDupablePerformIO (MutableVector.unsafeNew size))
-      UnfoldM.foldlM' step mv unfoldM
+      UnfoldlM.foldlM' step mv unfoldlM
       !iv <- return (unsafeDupablePerformIO (unsafeFreeze mv))
       return iv
 
