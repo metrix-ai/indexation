@@ -86,6 +86,11 @@ import DeferredFolds.Unfoldl as Exports (Unfoldl(..))
 import DeferredFolds.UnfoldlM as Exports (UnfoldlM(..))
 import DeferredFolds.Unfoldr as Exports (Unfoldr(..))
 
+-- contravariant
+-------------------------
+import Data.Functor.Contravariant as Exports
+import Data.Functor.Contravariant.Divisible as Exports
+
 -- hashable
 -------------------------
 import Data.Hashable as Exports (Hashable(..))
