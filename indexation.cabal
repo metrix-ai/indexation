@@ -1,5 +1,5 @@
 name: indexation
-version: 0.4.2.3
+version: 0.4.3
 category: Data
 synopsis: Tools for entity indexation
 description: A set of tools for indexing entities
@@ -20,6 +20,7 @@ library
   exposed-modules:
     Indexation.Data
     Indexation.IO
+    Indexation.Potoki.Produce
     Indexation.Potoki.Transform
   other-modules:
     Indexation.Cereal.Get
