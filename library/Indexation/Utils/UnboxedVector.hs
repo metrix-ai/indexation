@@ -1,4 +1,4 @@
-module Indexation.UnboxedVector
+module Indexation.Utils.UnboxedVector
 where
 
 import Indexation.Prelude hiding (Vector)

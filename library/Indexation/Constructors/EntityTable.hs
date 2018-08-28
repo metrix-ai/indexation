@@ -3,7 +3,7 @@ where
 
 import Indexation.Prelude hiding (lookup)
 import Indexation.Types
-import qualified Indexation.Vector as A
+import qualified Indexation.Utils.Vector as A
 
 
 indexTable :: IndexTable entity -> EntityTable entity

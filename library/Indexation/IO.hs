@@ -22,7 +22,7 @@ import qualified Potoki.Consume as PotokiConsume
 import qualified Potoki.Cereal.Consume as PotokiConsume
 import qualified Potoki.Cereal.Produce as PotokiProduce
 import qualified Indexation.Potoki.Transform as PotokiTransform
-import qualified Indexation.Vector as Vector
+import qualified Indexation.Utils.Vector as Vector
 import qualified StmContainers.Map as StmMap
 import qualified Data.Serialize as Cereal
 import qualified Data.ByteString as ByteString

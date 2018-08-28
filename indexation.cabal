@@ -30,9 +30,9 @@ library
     Indexation.Instances.Cereal
     Indexation.Prelude
     Indexation.Types
-    Indexation.Vector
-    Indexation.UnboxedVector
-    Indexation.Unfoldr
+    Indexation.Utils.Vector
+    Indexation.Utils.UnboxedVector
+    Indexation.Utils.Unfoldr
   build-depends:
     base >=4.11 && <5,
     bytestring >=0.10.8 && <0.11,

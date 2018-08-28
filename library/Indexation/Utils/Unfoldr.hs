@@ -1,4 +1,4 @@
-module Indexation.Unfoldr
+module Indexation.Utils.Unfoldr
 where
 
 import Indexation.Prelude

@@ -18,8 +18,8 @@ import Indexation.Instances ()
 import qualified Data.Vector as Vector
 import qualified Data.HashMap.Strict as HashMap
 import qualified Data.Vector.Unboxed as UnboxedVector
-import qualified Indexation.UnboxedVector as UnboxedVector
-import qualified Indexation.Unfoldr as Unfoldr
+import qualified Indexation.Utils.UnboxedVector as UnboxedVector
+import qualified Indexation.Utils.Unfoldr as Unfoldr
 
 
 lookupEntity :: Index entity -> EntityTable entity -> Maybe entity

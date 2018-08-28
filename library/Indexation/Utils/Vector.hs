@@ -1,4 +1,4 @@
-module Indexation.Vector
+module Indexation.Utils.Vector
 where
 
 import Indexation.Prelude
