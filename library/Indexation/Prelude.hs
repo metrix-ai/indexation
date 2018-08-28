@@ -84,6 +84,7 @@ import Control.Monad.Trans.Writer.Strict as Exports (Writer, runWriter, execWrit
 -------------------------
 import DeferredFolds.Unfoldl as Exports (Unfoldl(..))
 import DeferredFolds.UnfoldlM as Exports (UnfoldlM(..))
+import DeferredFolds.Unfoldr as Exports (Unfoldr(..))
 
 -- hashable
 -------------------------
