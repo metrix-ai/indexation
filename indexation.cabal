@@ -30,6 +30,8 @@ library
     Indexation.Prelude
     Indexation.Types
     Indexation.Vector
+    Indexation.UnboxedVector
+    Indexation.Unfoldr
   build-depends:
     base >=4.11 && <5,
     bytestring >=0.10.8 && <0.11,
