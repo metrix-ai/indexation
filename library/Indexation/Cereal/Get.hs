@@ -5,7 +5,7 @@ import Indexation.Prelude
 import Indexation.Types
 import Data.Serialize.Get
 import qualified Data.HashMap.Strict as A
-import qualified Data.Vector as B
+import qualified Data.Vector.Generic as B
 
 
 getIndexHashMap :: (Eq k, Hashable k) => Get k -> Get (HashMap k Int)
@@ -33,7 +33,8 @@ getIndexTableAsEntityTable getEntity =
           entity <- getEntity
           return (A.insert entity index hashMap)
 
-getVector :: Get element -> Get (Vector element)
+{-# INLINE getVector #-}
+getVector :: B.Vector vector element => Get element -> Get (vector element)
 getVector getElement =
   getSize >>= getElements
   where

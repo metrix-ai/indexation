@@ -4,15 +4,16 @@ where
 import Indexation.Prelude
 import Indexation.Types
 import Data.Serialize.Put
-import qualified Data.Vector as B
+import qualified Data.Vector.Generic as B
 
 
-putVector :: Putter element -> Putter (Vector element)
+{-# INLINE putVector #-}
+putVector :: (B.Vector vector element) => Putter element -> Putter (vector element)
 putVector putElement vector =
   putSize *> putElements
   where
     putSize = putInt64le (fromIntegral (B.length vector))
-    putElements = traverse_ putElement vector
+    putElements = B.foldM'_ (const putElement) () vector
 
 putEntityTable :: Putter entity -> Putter (EntityTable entity)
 putEntityTable putEntity (EntityTable vector) =
