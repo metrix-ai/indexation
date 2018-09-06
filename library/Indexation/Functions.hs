@@ -25,3 +25,6 @@ createIndexSet (IndexTable size map) entities =
 
 lookupInIndexSet :: Index entity -> IndexSet entity -> Bool
 lookupInIndexSet (Index indexInt) (IndexSet vec) = vec UnboxedVector.!? indexInt & fromMaybe False
+
+mergeIndexSets :: IndexSet entity -> IndexSet entity -> IndexSet entity
+mergeIndexSets (IndexSet vec1) (IndexSet vec2) = IndexSet $ UnboxedVector.zipWith (||) vec1 vec2
