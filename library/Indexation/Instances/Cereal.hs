@@ -20,3 +20,7 @@ instance Serialize entity => Serialize (EntityTable entity) where
 instance (Serialize entity, Eq entity, Hashable entity) => Serialize (IndexTable entity) where
   get = Get.getIndexTableAsEntityTable get
   put = Put.putEntityTable put . EntityTable.indexTable
+
+instance Serialize (IndexSet a) where
+  get = IndexSet <$> Get.getVector get
+  put (IndexSet vector) = Put.putVector put vector
