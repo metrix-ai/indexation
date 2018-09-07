@@ -107,6 +107,10 @@ import Data.Vector as Exports (Vector)
 -------------------------
 import Data.Serialize as Exports (Serialize)
 
+-- cereal-vector
+-------------------------
+import Data.Vector.Serialize ()
+
 -- bytestring
 -------------------------
 import Data.ByteString as Exports (ByteString)

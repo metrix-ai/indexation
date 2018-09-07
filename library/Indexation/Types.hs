@@ -19,3 +19,5 @@ Set of indices.
 A more efficient alternative to @HashSet (Index entity)@.
 -}
 newtype IndexSet entity = IndexSet (UnboxedVector.Vector Bool)
+
+newtype IndexCounts entity = IndexCounts (UnboxedVector.Vector Word32)

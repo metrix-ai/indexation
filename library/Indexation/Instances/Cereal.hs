@@ -24,3 +24,5 @@ instance (Serialize entity, Eq entity, Hashable entity) => Serialize (IndexTable
 instance Serialize (IndexSet a) where
   get = IndexSet <$> Get.getVector get
   put (IndexSet vector) = Put.putVector put vector
+
+deriving instance Serialize (IndexCounts a)
