@@ -3,7 +3,6 @@ where
 
 import Indexation.Prelude
 import Indexation.Types
-import Indexation.Instances ()
 import qualified Data.Vector as Vector
 import qualified Data.HashMap.Strict as HashMap
 import qualified Data.Vector.Unboxed as UnboxedVector

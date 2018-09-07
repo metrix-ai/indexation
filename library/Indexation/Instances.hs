@@ -4,6 +4,7 @@ where
 import Indexation.Prelude
 import Indexation.Types
 import Indexation.Instances.Cereal ()
+import Indexation.Functions
 import qualified Data.Vector.Unboxed as UnboxedVector
 
 
