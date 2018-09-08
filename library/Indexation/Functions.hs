@@ -8,7 +8,9 @@ import qualified Data.HashMap.Strict as HashMap
 import qualified Data.Vector.Unboxed as UnboxedVector
 import qualified Data.Vector.Unboxed.Mutable as MutableUnboxedVector
 import qualified Data.Vector.Algorithms.Intro as IntroVectorAlgorithm
-import qualified Indexation.Utils.UnboxedVector as UnboxedVector
+import qualified Data.Bit as Bit
+import qualified Data.Vector.Unboxed.Bit as BitVec
+import qualified Indexation.Utils.BitVector as UnboxedVector
 import qualified Indexation.Utils.Unfoldr as Unfoldr
 
 
@@ -25,10 +27,10 @@ createIndexSet (IndexTable size map) entities =
   IndexSet (UnboxedVector.filledIndicesFoldable size (Unfoldr.hashMapValuesByKeys entities map))
 
 lookupInIndexSet :: Index entity -> IndexSet entity -> Bool
-lookupInIndexSet (Index indexInt) (IndexSet vec) = vec UnboxedVector.!? indexInt & fromMaybe False
+lookupInIndexSet (Index indexInt) (IndexSet vec) = vec UnboxedVector.!? indexInt & maybe False Bit.toBool
 
 mergeIndexSets :: IndexSet entity -> IndexSet entity -> IndexSet entity
-mergeIndexSets (IndexSet vec1) (IndexSet vec2) = IndexSet $ UnboxedVector.zipWith (&&) vec1 vec2
+mergeIndexSets (IndexSet a) (IndexSet b) = IndexSet (BitVec.intersection a b)
 
 topCountedIndexSet :: Int -> IndexCounts a -> IndexSet a
 topCountedIndexSet amount (IndexCounts countVec) = let
@@ -40,8 +42,8 @@ topCountedIndexSet amount (IndexCounts countVec) = let
     indexSetMVec <- MutableUnboxedVector.new countVecLength
     forM_ [0..(pred limitedAmount)] $ \ pairIndex -> do
       (_, index) <- MutableUnboxedVector.unsafeRead pairMVec pairIndex
-      MutableUnboxedVector.write indexSetMVec index True
+      MutableUnboxedVector.write indexSetMVec index (Bit.fromBool True)
     IndexSet <$> UnboxedVector.unsafeFreeze indexSetMVec
 
 indexSetByMinCount :: Word32 -> IndexCounts a -> IndexSet a
-indexSetByMinCount min (IndexCounts countVec) = IndexSet (UnboxedVector.map (>= min) countVec)
+indexSetByMinCount min (IndexCounts countVec) = IndexSet (UnboxedVector.map (Bit.fromBool . (>= min)) countVec)
