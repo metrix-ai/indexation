@@ -47,3 +47,9 @@ topCountedIndexSet amount (IndexCounts countVec) = let
 
 indexSetByMinCount :: Word32 -> IndexCounts a -> IndexSet a
 indexSetByMinCount min (IndexCounts countVec) = IndexSet (UnboxedVector.map (Bit.fromBool . (>= min)) countVec)
+
+countIndexSet :: IndexSet a -> Int
+countIndexSet (IndexSet vec) = BitVec.countBits vec
+
+invertIndexSet :: IndexSet a -> IndexSet a
+invertIndexSet (IndexSet vec) = IndexSet (BitVec.invert vec)
