@@ -5,7 +5,6 @@ import Indexation.Prelude hiding (not)
 import Indexation.Types
 import Indexation.Instances ()
 import qualified Indexation.Prelude as Prelude
-import qualified Indexation.Utils.BitVector as UnboxedVector
 import qualified Indexation.Functions as Functions
 
 

@@ -2,7 +2,6 @@ module Indexation.Prelude
 (
   module Exports,
   UnboxedVector,
-  BitVector,
 )
 where
 
@@ -139,16 +138,13 @@ import Control.Monad.Morph as Exports hiding (MonadTrans(..))
 -------------------------
 import ListT as Exports (ListT(..))
 
--- bitvec
+-- dense-int-set
 -------------------------
-import Data.Bit as Exports (Bit)
+import DenseIntSet as Exports (DenseIntSet)
 
 -- 
 -------------------------
-import qualified Data.Vector.Unboxed.Bit as BitVec
 import qualified Data.Vector.Unboxed as UnboxedVector
 
 
 type UnboxedVector = UnboxedVector.Vector
-
-type BitVector = UnboxedVector Bit
