@@ -37,3 +37,9 @@ indexSetByMinCount min (IndexCounts countVec) = IndexSet (DenseIntSet.filteredIn
 
 countIndexSet :: IndexSet a -> Int
 countIndexSet (IndexSet set) = DenseIntSet.size set
+
+reindexationTable :: IndexSet a -> EntityTable (Index a)
+reindexationTable (IndexSet set) = EntityTable (coerce (DenseIntSet.presentElementsVector set :: Vector Int))
+
+reindex :: IndexSet a -> EntityTable a -> EntityTable a
+reindex (IndexSet set) (EntityTable vec) = EntityTable (DenseIntSet.filterVector set vec)
