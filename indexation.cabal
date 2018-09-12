@@ -27,7 +27,6 @@ library
   other-modules:
     Indexation.Cereal.Get
     Indexation.Cereal.Put
-    Indexation.Constructors.EntityTable
     Indexation.Instances
     Indexation.Instances.Cereal
     Indexation.Prelude

@@ -6,7 +6,7 @@ import Indexation.Types
 import Data.Serialize
 import qualified Indexation.Cereal.Get as Get
 import qualified Indexation.Cereal.Put as Put
-import qualified Indexation.Constructors.EntityTable as EntityTable
+import qualified Indexation.Functions as Functions
 
 
 instance Serialize (Index a) where
@@ -19,7 +19,7 @@ instance Serialize entity => Serialize (EntityTable entity) where
 
 instance (Serialize entity, Eq entity, Hashable entity) => Serialize (IndexTable entity) where
   get = Get.getIndexTableAsEntityTable get
-  put = Put.putEntityTable put . EntityTable.indexTable
+  put = Put.putEntityTable put . Functions.indexTableEntityTable
 
 deriving instance Serialize (IndexSet a)
 

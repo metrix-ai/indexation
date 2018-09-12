@@ -9,7 +9,12 @@ import qualified Data.Vector.Unboxed as UnboxedVector
 import qualified Data.Vector.Unboxed.Mutable as MutableUnboxedVector
 import qualified DeferredFolds.Unfoldr as Unfoldr
 import qualified DenseIntSet
+import qualified Indexation.Utils.Vector as Vector
 
+
+indexTableEntityTable :: IndexTable entity -> EntityTable entity
+indexTableEntityTable (IndexTable size table) =
+  EntityTable (Vector.indexHashMapWithSize size table)
 
 lookupEntity :: Index entity -> EntityTable entity -> Maybe entity
 lookupEntity (Index indexPrim) (EntityTable vector) =
