@@ -10,6 +10,11 @@ data Indexer entity = Indexer {-# UNPACK #-} !(TVar Int) {-# UNPACK #-} !(StmMap
 
 data IndexTable entity = IndexTable {-# UNPACK #-} !Int {-# UNPACK #-} !(HashMap entity Int)
 
+{-|
+Map from old to new indices.
+-}
+newtype ReindexTable entity = ReindexTable (Vector (Maybe Int))
+
 newtype EntityTable entity = EntityTable (Vector entity)
 
 newtype Index entity = Index Int

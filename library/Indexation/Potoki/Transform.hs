@@ -4,7 +4,9 @@ module Indexation.Potoki.Transform
   Index(..),
   Indexer,
   EntityTable,
+  ReindexTable,
   index,
+  reindex,
   lookup,
 )
 where
@@ -16,6 +18,7 @@ import Potoki.Transform
 import qualified Focus
 import qualified StmContainers.Map as StmMap
 import qualified Data.Vector as Vector
+import qualified Indexation.Functions as Functions
 
 
 index :: (Eq entity, Hashable entity) => Indexer entity -> Transform entity (Index entity)
@@ -29,6 +32,9 @@ index (Indexer sizeVar map) =
         writeTVar sizeVar $! succ size
         return (Index size, Focus.Set size)
       reveal indexInt = return (Index indexInt, Focus.Leave)
+
+reindex :: ReindexTable entity -> Transform (Index entity) (Index entity)
+reindex table = mapFilter (\ oldIndex -> Functions.lookupNewIndex oldIndex table)
 
 lookup :: EntityTable entity -> Transform (Index entity) (Maybe entity)
 lookup (EntityTable entityTableVector) =

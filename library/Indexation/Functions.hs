@@ -31,6 +31,9 @@ createIndexSet (IndexTable size map) entities =
 lookupInIndexSet :: Index entity -> IndexSet entity -> Bool
 lookupInIndexSet (Index indexInt) (IndexSet set) = DenseIntSet.lookup indexInt set
 
+lookupNewIndex :: Index entity -> ReindexTable entity -> Maybe (Index entity)
+lookupNewIndex (Index oldIndexInt) (ReindexTable mapVector) = fmap Index (join (mapVector Vector.!? oldIndexInt))
+
 mergeIndexSets :: IndexSet entity -> IndexSet entity -> IndexSet entity
 mergeIndexSets (IndexSet a) (IndexSet b) = IndexSet (DenseIntSet.intersection (DenseIntSet.compose a <> DenseIntSet.compose b))
 
@@ -43,8 +46,11 @@ indexSetByMinCount min (IndexCounts countVec) = IndexSet (DenseIntSet.filteredIn
 countIndexSet :: IndexSet a -> Int
 countIndexSet (IndexSet set) = DenseIntSet.size set
 
-reindexationTable :: IndexSet a -> EntityTable (Index a)
-reindexationTable (IndexSet set) = EntityTable (coerce (DenseIntSet.presentElementsVector set :: Vector Int))
+newIndexToOldIndexTable :: IndexSet a -> EntityTable (Index a)
+newIndexToOldIndexTable (IndexSet set) = EntityTable (coerce (DenseIntSet.presentElementsVector set :: Vector Int))
 
-reindex :: IndexSet a -> EntityTable a -> EntityTable a
-reindex (IndexSet set) (EntityTable vec) = EntityTable (DenseIntSet.filterVector set vec)
+oldIndexToNewIndexTable :: IndexSet a -> ReindexTable a
+oldIndexToNewIndexTable (IndexSet set) = ReindexTable (DenseIntSet.indexVector set)
+
+filterEntityTable :: IndexSet a -> EntityTable a -> EntityTable a
+filterEntityTable (IndexSet set) (EntityTable vec) = EntityTable (DenseIntSet.filterVector set vec)

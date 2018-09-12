@@ -41,7 +41,7 @@ library
     cereal-vector >=0.2.0.1 && <0.3,
     contravariant >=1.4 && <2,
     deferred-folds >=0.9.6 && <0.10,
-    dense-int-set >=0.1.1 && <0.2,
+    dense-int-set >=0.1.4 && <0.2,
     focus >=1.0.1 && <1.1,
     foldl >=1 && <2,
     hashable >=1 && <2,
