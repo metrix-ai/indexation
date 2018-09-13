@@ -142,6 +142,10 @@ import ListT as Exports (ListT(..))
 -------------------------
 import DenseIntSet as Exports (DenseIntSet)
 
+-- deepseq
+-------------------------
+import Control.DeepSeq as Exports
+
 -- 
 -------------------------
 import qualified Data.Vector.Unboxed as UnboxedVector
