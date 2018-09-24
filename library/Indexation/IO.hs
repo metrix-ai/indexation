@@ -17,6 +17,7 @@ import Indexation.Prelude
 import Indexation.Types
 import Indexation.Instances ()
 import qualified Potoki.IO as PotokiIo
+import qualified Potoki.Cereal.IO as PotokiIo
 import qualified Potoki.Produce as PotokiProduce
 import qualified Potoki.Consume as PotokiConsume
 import qualified Potoki.Cereal.Consume as PotokiConsume
@@ -68,13 +69,7 @@ readEntitiesAmountFromEntityTableFile filePath =
       Left x -> error ("Unexpected binary parsing error: " <> x)
 
 readEntityTableFromFile :: Serialize entity => FilePath -> IO (Either IOException (Either Text (EntityTable entity)))
-readEntityTableFromFile filePath =
-  PotokiIo.produceAndConsume
-    (PotokiProduce.fileBytes filePath)
-    (right' (PotokiConsume.get Cereal.get))
+readEntityTableFromFile = PotokiIo.deserializeFromFile
 
 readIndexTableFromFile :: (Serialize entity, Eq entity, Hashable entity) => FilePath -> IO (Either IOException (Either Text (IndexTable entity)))
-readIndexTableFromFile filePath =
-  PotokiIo.produceAndConsume
-    (PotokiProduce.fileBytes filePath)
-    (right' (PotokiConsume.get Cereal.get))
+readIndexTableFromFile = PotokiIo.deserializeFromFile
