@@ -8,16 +8,25 @@ import qualified Data.Vector.Unboxed as UnboxedVector
 
 data Indexer entity = Indexer {-# UNPACK #-} !(TVar Int) {-# UNPACK #-} !(StmMap.Map entity Int)
 
-data IndexTable entity = IndexTable {-# UNPACK #-} !Int {-# UNPACK #-} !(HashMap entity Int)
+{-|
+Index by entity table.
+-}
+data IndexTable prim entity = IndexTable {-# UNPACK #-} !Int {-# UNPACK #-} !(HashMap entity prim)
 
 {-|
 Map from old to new indices.
 -}
-newtype ReindexTable entity = ReindexTable (Vector (Maybe Int))
+newtype ReindexTable prim entity = ReindexTable (Vector (Maybe prim))
 
+{-|
+Entity by index table.
+-}
 newtype EntityTable entity = EntityTable (Vector entity)
 
-newtype Index entity = Index Int
+{-|
+A primitive wrapper for type-safe entity relations.
+-}
+newtype Index prim entity = Index prim
 
 {-|
 Set of indices.

@@ -19,7 +19,7 @@ getIndexHashMap getKey =
           key <- getKey
           return (A.insert key index hashMap)
 
-getIndexTableAsEntityTable :: (Eq entity, Hashable entity) => Get entity -> Get (IndexTable entity)
+getIndexTableAsEntityTable :: (Eq entity, Hashable entity, Num prim, Enum prim) => Get entity -> Get (IndexTable prim entity)
 getIndexTableAsEntityTable getEntity =
   do
     size <- getSize
@@ -27,7 +27,7 @@ getIndexTableAsEntityTable getEntity =
     return (IndexTable size associations)
   where
     getSize = fromIntegral <$> getInt64le
-    getAssociations size = foldM step A.empty (enumFromTo 0 (pred size))
+    getAssociations size = foldM step A.empty (enumFromTo 0 (fromIntegral (pred size)))
       where
         step hashMap index = do
           entity <- getEntity
@@ -44,6 +44,3 @@ getVector getElement =
 getEntityTable :: Get entity -> Get (EntityTable entity)
 getEntityTable getEntity =
   EntityTable <$> getVector getEntity
-
-getIndex :: Get (Index entity)
-getIndex = Index . fromIntegral <$> getInt64le

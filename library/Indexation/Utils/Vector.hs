@@ -30,24 +30,6 @@ populate size effect =
             return v
       in loop size
 
-{-|
-This function is partial. It doesn't check the size or indices.
--}
-{-# INLINE indexHashMapWithSize #-}
-indexHashMapWithSize :: Int -> HashMap element Int -> Vector element
-indexHashMapWithSize size = unfoldrWithSize size . fmap swap . Unfoldr.hashMapAssocs
-
-{-|
-This function is partial. It doesn't check the size or indices.
--}
-{-# INLINE unfoldrWithSize #-}
-unfoldrWithSize :: Int -> Unfoldr (Int, element) -> Vector element
-unfoldrWithSize size unfoldr =
-  runST $ do
-    mv <- MutableVector.new size
-    Indexation.Prelude.forM_ unfoldr $ \ (index, element) -> MutableVector.write mv index element
-    freeze mv
-
 {-# NOINLINE unfoldlM #-}
 unfoldlM :: Monad m => Int -> UnfoldlM m (Int, element) -> m (Vector element)
 unfoldlM size unfoldlM =

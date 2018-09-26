@@ -11,5 +11,5 @@ import qualified Indexation.Functions as Functions
 negated :: Predicate a -> Predicate a
 negated (Predicate fn) = Predicate (Prelude.not . fn)
 
-inIndexSet :: IndexSet a -> Predicate (Index a)
+inIndexSet :: Integral prim => IndexSet a -> Predicate (Index prim a)
 inIndexSet indexSet = Predicate (\ index -> Functions.lookupInIndexSet index indexSet)

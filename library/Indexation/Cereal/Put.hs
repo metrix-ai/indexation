@@ -18,6 +18,3 @@ putVector putElement vector =
 putEntityTable :: Putter entity -> Putter (EntityTable entity)
 putEntityTable putEntity (EntityTable vector) =
   putVector putEntity vector
-
-putIndex :: Putter (Index entity)
-putIndex (Index int) = putInt64le (fromIntegral int)

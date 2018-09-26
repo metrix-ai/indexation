@@ -32,5 +32,5 @@ indexedCounts (IndexCounts vector) = Produce.vectorWithIndices vector
 {-|
 Indices, which are present in the set.
 -}
-indices :: IndexSet a -> Produce (Index a)
+indices :: IndexSet a -> Produce (Index Int a)
 indices (IndexSet set) = coerce (Produce.unfoldr (DenseIntSet.presentElementsUnfoldr set))

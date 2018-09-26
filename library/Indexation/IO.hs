@@ -71,5 +71,5 @@ readEntitiesAmountFromEntityTableFile filePath =
 readEntityTableFromFile :: Serialize entity => FilePath -> IO (Either IOException (Either Text (EntityTable entity)))
 readEntityTableFromFile = PotokiIo.deserializeFromFile
 
-readIndexTableFromFile :: (Serialize entity, Eq entity, Hashable entity) => FilePath -> IO (Either IOException (Either Text (IndexTable entity)))
+readIndexTableFromFile :: (Serialize entity, Eq entity, Hashable entity, Integral prim) => FilePath -> IO (Either IOException (Either Text (IndexTable prim entity)))
 readIndexTableFromFile = PotokiIo.deserializeFromFile
