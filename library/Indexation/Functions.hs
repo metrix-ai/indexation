@@ -47,7 +47,7 @@ countIndexSet :: IndexSet a -> Int
 countIndexSet (IndexSet set) = DenseIntSet.size set
 
 newIndexToOldIndexTable :: IndexSet a -> EntityTable (Index a)
-newIndexToOldIndexTable (IndexSet set) = EntityTable (coerce (DenseIntSet.presentElementsVector set :: Vector Int))
+newIndexToOldIndexTable (IndexSet set) = EntityTable (coerce (DenseIntSet.presentElementsVector @Vector set))
 
 oldIndexToNewIndexTable :: IndexSet a -> ReindexTable a
 oldIndexToNewIndexTable (IndexSet set) = ReindexTable (DenseIntSet.indexVector set)
