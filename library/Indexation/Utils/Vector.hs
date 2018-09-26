@@ -6,6 +6,7 @@ import Data.Vector
 import qualified Data.Vector.Mutable as MutableVector
 import qualified Data.HashMap.Strict as HashMap
 import qualified DeferredFolds.UnfoldlM as UnfoldlM
+import qualified DeferredFolds.Unfoldr as Unfoldr
 import qualified ListT
 
 
@@ -34,13 +35,17 @@ This function is partial. It doesn't check the size or indices.
 -}
 {-# INLINE indexHashMapWithSize #-}
 indexHashMapWithSize :: Int -> HashMap element Int -> Vector element
-indexHashMapWithSize size hashMap =
+indexHashMapWithSize size = unfoldrWithSize size . fmap swap . Unfoldr.hashMapAssocs
+
+{-|
+This function is partial. It doesn't check the size or indices.
+-}
+{-# INLINE unfoldrWithSize #-}
+unfoldrWithSize :: Int -> Unfoldr (Int, element) -> Vector element
+unfoldrWithSize size unfoldr =
   runST $ do
     mv <- MutableVector.new size
-    HashMap.foldrWithKey
-      (\ element index action -> MutableVector.write mv index element >> action)
-      (return ())
-      hashMap
+    Indexation.Prelude.forM_ unfoldr $ \ (index, element) -> MutableVector.write mv index element
     freeze mv
 
 {-# NOINLINE unfoldlM #-}
