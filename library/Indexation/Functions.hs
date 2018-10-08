@@ -34,8 +34,14 @@ lookupInIndexSet (Index indexInt) (IndexSet set) = DenseIntSet.lookup indexInt s
 lookupNewIndex :: Index entity -> ReindexTable entity -> Maybe (Index entity)
 lookupNewIndex (Index oldIndexInt) (ReindexTable mapVector) = fmap Index (join (mapVector Vector.!? oldIndexInt))
 
-mergeIndexSets :: IndexSet entity -> IndexSet entity -> IndexSet entity
-mergeIndexSets (IndexSet a) (IndexSet b) = IndexSet (DenseIntSet.intersections [a, b])
+intersectIndexSets :: [IndexSet entity] -> IndexSet entity
+intersectIndexSets = IndexSet . DenseIntSet.intersections . coerce
+
+uniteIndexSets :: [IndexSet entity] -> IndexSet entity
+uniteIndexSets = IndexSet . DenseIntSet.unions . coerce
+
+invertIndexSet :: IndexSet entity -> IndexSet entity
+invertIndexSet (IndexSet x) = IndexSet (DenseIntSet.invert x)
 
 topCountedIndexSet :: Int -> IndexCounts a -> IndexSet a
 topCountedIndexSet amount (IndexCounts countVec) = IndexSet (DenseIntSet.topValueIndices compare amount countVec)
