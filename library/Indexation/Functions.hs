@@ -35,7 +35,7 @@ lookupNewIndex :: Index entity -> ReindexTable entity -> Maybe (Index entity)
 lookupNewIndex (Index oldIndexInt) (ReindexTable mapVector) = fmap Index (join (mapVector Vector.!? oldIndexInt))
 
 mergeIndexSets :: IndexSet entity -> IndexSet entity -> IndexSet entity
-mergeIndexSets (IndexSet a) (IndexSet b) = IndexSet (DenseIntSet.intersection (DenseIntSet.compose a <> DenseIntSet.compose b))
+mergeIndexSets (IndexSet a) (IndexSet b) = IndexSet (DenseIntSet.intersections [a, b])
 
 topCountedIndexSet :: Int -> IndexCounts a -> IndexSet a
 topCountedIndexSet amount (IndexCounts countVec) = IndexSet (DenseIntSet.topValueIndices compare amount countVec)
@@ -44,7 +44,7 @@ indexSetByMinCount :: Word32 -> IndexCounts a -> IndexSet a
 indexSetByMinCount min (IndexCounts countVec) = IndexSet (DenseIntSet.filteredIndices (>= min) countVec)
 
 countIndexSet :: IndexSet a -> Int
-countIndexSet (IndexSet set) = DenseIntSet.size set
+countIndexSet (IndexSet set) = DenseIntSet.population set
 
 newIndexToOldIndexTable :: IndexSet a -> EntityTable (Index a)
 newIndexToOldIndexTable (IndexSet set) = EntityTable (DenseIntSet.presentElementsVector set Index)
