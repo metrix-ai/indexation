@@ -31,7 +31,7 @@ getIndexTableAsEntityTable getEntity =
       where
         step hashMap index = do
           entity <- getEntity
-          return (A.insert entity index hashMap)
+          return $! A.insert entity index hashMap
 
 {-# INLINE getVector #-}
 getVector :: B.Vector vector element => Get element -> Get (vector element)
